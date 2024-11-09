@@ -145,7 +145,6 @@ public class ServiceImpl implements Service {
 }
 	@Override
 	public void viewaccount(){
-		// TODO Auto-generated method stub
 		try{
 			System.out.println("Enter account id: ");
 			int a_id=sn.nextInt();
@@ -175,7 +174,6 @@ public class ServiceImpl implements Service {
 
 	@Override
 	public void updateaccount() {
-		// TODO Auto-generated method stub
 		try {
 			System.out.println("Enter account id :");
 			int a_id=sn.nextInt();
@@ -254,7 +252,6 @@ public class ServiceImpl implements Service {
 	        System.out.print("Enter account id: ");
 	        int acc_id = sn.nextInt();
 
-	        // Check if account_id exists in the account table
 	        String checkAccountQuery = "SELECT account_id FROM account WHERE account_id = ?";
 	        PreparedStatement Stmt = conn.prepareStatement(checkAccountQuery);
 	        Stmt.setInt(1, acc_id);
@@ -268,7 +265,6 @@ public class ServiceImpl implements Service {
 	        System.out.print("Enter amount to deposit: ");
 	        double amount = sn.nextDouble();
 	        
-	        // Proceed with inserting the transaction if account_id exists
 	        String query = "INSERT INTO transaction (account_id, transaction_type, amount) VALUES (?, ?, ?)";
 	        PreparedStatement stmt = conn.prepareStatement(query);
 	        stmt.setInt(1, acc_id);
@@ -276,7 +272,6 @@ public class ServiceImpl implements Service {
 	        stmt.setDouble(3, amount);
 	        stmt.executeUpdate();
 	        
-	        // Update account balance
 	        query = "UPDATE account SET balance = balance + ? WHERE account_id = ?";
 	        stmt = conn.prepareStatement(query);
 	        stmt.setDouble(1, amount);
@@ -304,7 +299,6 @@ public class ServiceImpl implements Service {
 	        System.out.println("Enter transfer amount: ");
 	        double amount = sn.nextDouble();
 	        
-	        // Check balance in source account
 	        String checkBalanceQuery = "SELECT balance FROM account WHERE account_id = ?";
 	        PreparedStatement stmt = conn.prepareStatement(checkBalanceQuery);
 	        stmt.setInt(1, sourceAcc);
@@ -314,21 +308,18 @@ public class ServiceImpl implements Service {
 	            double balance = rs.getDouble("balance");
 	            
 	            if (balance >= amount) {
-	                // Deduct from source account
 	                String deductQuery = "UPDATE account SET balance = balance - ? WHERE account_id = ?";
 	                PreparedStatement deductStmt = conn.prepareStatement(deductQuery);
 	                deductStmt.setDouble(1, amount);
 	                deductStmt.setInt(2, sourceAcc);
 	                deductStmt.executeUpdate();
 
-	                // Add to destination account
 	                String addQuery = "UPDATE account SET balance = balance + ? WHERE account_id = ?";
 	                PreparedStatement addStmt = conn.prepareStatement(addQuery);
 	                addStmt.setDouble(1, amount);
 	                addStmt.setInt(2, dest);
 	                addStmt.executeUpdate();
 
-	                // Record transaction
 	                String recordTransaction = "INSERT INTO transaction (account_id, transaction_type, amount) VALUES (?, ?, ?)";
 	                
 	                PreparedStatement transStmt = conn.prepareStatement(recordTransaction);
@@ -357,7 +348,6 @@ public class ServiceImpl implements Service {
 
 	@Override
 	public void viewtrans() {
-		// TODO Auto-generated method 
 		try {
 		Connection conn=Bank.db_Connect();
 		System.out.print("enter account id: ");
@@ -452,7 +442,6 @@ public class BankController {
 	}
  }
 	  catch(SQLException e) {
-		  //to auto generate catch block
 		  e.printStackTrace();
 	  }
   }
